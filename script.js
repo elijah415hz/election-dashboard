@@ -31,14 +31,14 @@ $.ajax({
 })
 
 
-// repBtn is a placeholder for the buttons created under each dropdown. Replace it with whatever setting will capture those. repPic.attr needs to be tied back to the correct variable based on how the buttons are generating info.
-var repBtn = $("<button>");
-repBtn.click(function(){
-    var repPic = $("<img src = '' alt = 'Picture of Representative'>");
-    // repPic.attr("src", ${response.officials[i].photoUrl});
-    $('.main').append(repPic);
-})
-
+// repBtn is a placeholder for the buttons created under each dropdown. Replace it with whatever setting will capture those. repPic.attr needs to be tied back to the correct variable based on how the buttons are generating info. Needs to be made into a function.
+function clickRep(){
+    repBtn.click(function(){
+        var repPic = $("<img src = '' alt = 'Picture of Representative'>");
+        repPic.attr("src", ${response.officials[i].photoUrl});
+        $('.main').append(repPic);
+    })
+    };
 
 // Twitter info request, when ready, copy this into click event for elected official and build out the display functionality in the part of the ajax reqeuest after function (tweets). Replace 'response' in URL below with necessary reference to the google electeds' api response. 
 // var twitterSettings = {
