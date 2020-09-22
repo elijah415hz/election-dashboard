@@ -9,6 +9,10 @@ body {
     text-align: center;
     border-bottom-left-radius: 7px;
     border-bottom-right-radius: 7px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+
 }
 
 .form {
