@@ -1,0 +1,26 @@
+body {
+    margin: 0;
+    padding: 0;
+} 
+
+.navbar {
+    background-color: #3E50F0;
+    color: white;
+    text-align: center;
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+}
+
+.form {
+    text-align: center;
+}
+
+.button {
+    background-color: red;
+    color: white;
+}
+
+.sidebar {
+    background-color: #eee;
+    border-radius: 7px
+}
