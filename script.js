@@ -27,4 +27,5 @@ $.ajax({
             break;
         }
     }
+    console.log(federal, state, local);
 })
