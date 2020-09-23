@@ -41,6 +41,9 @@ function getOfficials(address) {
 
 // function adds officials to dropdown menus
 function addOfficialButtons(federalArr, stateArr, localArr) {
+    federal = []
+    state = []
+    local = []
     // empty out current dropdown menus when user submits new location
     federalOfficialsMenu.empty()
     stateOfficialsMenu.empty()
