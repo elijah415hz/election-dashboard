@@ -19,28 +19,12 @@ function getOfficials(address) {
     }).then(function (response) {
         var offices = response.offices
         var officials = response.officials
-        for (let i = 0; i < offices.length; i++) {
-            var level = offices[i].levels[0]
-            console.log(level);
-            switch (level) {
-                case "country":
-                    federal.push(officials[i])
-                    break;
-                case "administrativeArea1":
-                    state.push(officials[i])
-                    break;
-                case "administrativeArea2":
-                case "locality":
-                    local.push(officials[i])
-                    break;
-            }
-        }
-        addOfficialButtons(federal, state, local)
+        addOfficialButtons(offices, officials)
     })
 }
 
 // function adds officials to dropdown menus
-function addOfficialButtons(federalArr, stateArr, localArr) {
+function addOfficialButtons(offices, officials) {
     // empty out current dropdown menus when user submits new location
     federalOfficialsMenu.empty()
     stateOfficialsMenu.empty()
@@ -50,38 +34,26 @@ function addOfficialButtons(federalArr, stateArr, localArr) {
     stateOfficialsMenu.html('<option disabled selected>State Officials</option>')
     localOfficialsMenu.html('<option disabled selected>Local Officials</option>')
 
-    // for each federal official
-    federalArr.forEach(function (official) {
-        // create a new option element
+    for (let i = 0; i < offices.length; i++) {
+        var level = offices[i].levels[0]
         var newOfficialBtn = $('<option>')
-        // store the name of the current official
-        var officialName = official.name
-        // change option text to official's name
+        var officialName = officials[i].name
         newOfficialBtn.text(officialName)
-        // apend option to it's dropdown menu
-        federalOfficialsMenu.append(newOfficialBtn)
-    })
-    // for each state official
-    stateArr.forEach(function (official) {
-        // create a new option element
-        var newOfficialBtn = $('<option>')
-        // store the name of the current official
-        var officialName = official.name
-        newOfficialBtn.text(officialName)
-        // apend option to it's dropdown menu
-        stateOfficialsMenu.append(newOfficialBtn)
-    })
-    // for each local official
-    localArr.forEach(function (official) {
-        // create a new option element
-        var newOfficialBtn = $('<option>')
-        // store the name of the current official
-        var officialName = official.name
-        // change option text to official's name
-        newOfficialBtn.text(officialName)
-        // apend option to it's dropdown menu
-        localOfficialsMenu.append(newOfficialBtn)
-    })
+        newOfficialBtn.attr("data-index", i)
+        switch (level) {
+            case "country":
+                federalOfficialsMenu.append(newOfficialBtn)
+                break;
+            case "administrativeArea1":
+                stateOfficialsMenu.append(newOfficialBtn)
+                break;
+            case "administrativeArea2":
+            case "locality":
+                localOfficialsMenu.append(newOfficialBtn)
+                break;
+        }
+    }
+    
 }
 
 // retrieve elected officials for location when user click's submit
@@ -91,6 +63,7 @@ $('#submitBtn').on('click', function (event) {
     var userAddress = addressInputEle.val()
     // get user's elected officials
     getOfficials(userAddress)
+    clickRep()
 })
 
 // repBtn is a placeholder for the buttons created under each dropdown. Replace it with whatever setting will capture those. 
@@ -98,9 +71,11 @@ $('#submitBtn').on('click', function (event) {
 // I've used federal[0] as a placeholder in the information displays, as I'm not sure how we reference the correct array. If statement for each dropdown?
 function clickRep(){
     // When user chooses a representative:
-    repBtn.click(function(){
+    $(".sidebar").click(function(event){
         // Clear out anything currently appended to the main display div
         $('.main').empty();
+        // Testing click event...
+        console.log(event.target.tagName)
         // create an img tag
         var repPic = $("<img src = '' alt = 'Picture of Representative'>");
         // Grab the img URL from the API object, if it exists
