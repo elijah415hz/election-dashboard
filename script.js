@@ -25,20 +25,23 @@ function getOfficials(address) {
 
 // function adds officials to dropdown menus
 function addOfficialButtons(offices, officials) {
-    // empty out current dropdown menus when user submits new location
+    console.log(offices)
+    console.log(officials)
+    // empty out current collapsible menus when user submits new location
     federalOfficialsMenu.empty()
     stateOfficialsMenu.empty()
     localOfficialsMenu.empty()
-    // create disabled select buttons for each dropdown menu
-    federalOfficialsMenu.html('<option disabled selected>Federal Officials</option>')
-    stateOfficialsMenu.html('<option disabled selected>State Officials</option>')
-    localOfficialsMenu.html('<option disabled selected>Local Officials</option>')
+    // create header buttons for each collapsible menu
+    federalOfficialsMenu.html('<div class="collapsible-header"><i class="material-icons">account_balance</i>Federal Officals</div>')
+    stateOfficialsMenu.html('<div class="collapsible-header"><i class="material-icons">account_balance</i>State Officials</div>')
+    localOfficialsMenu.html('<div class="collapsible-header active"><i class="material-icons">account_balance</i>Local Officials</div>')
 
     for (let i = 0; i < offices.length; i++) {
         var level = offices[i].levels[0]
-        var newOfficialBtn = $('<option>')
+        var newOfficialBtn = $('<div>')
         var officialName = officials[i].name
-        newOfficialBtn.text(officialName)
+        newOfficialBtn.attr('class', 'collapsible-body')
+        newOfficialBtn.append(`<span>${officialName}</span>`)
         newOfficialBtn.attr("data-index", i)
         switch (level) {
             case "country":
