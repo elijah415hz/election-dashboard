@@ -9,30 +9,7 @@
 
 </head>
 <body>
-    <p>Here's the list of officials. Select any one:</p>
-       <form>
-          <select name = "dropdown">
-            <option value = "federal" selected>Federal officials</option>
-            <option value = "state"></option>
-            <option value = "local"></option>
-          </select>
-       </form>
-       <br>
-       <form>
-        <select name = "dropdown">
-          <option value = "state" selected>State officials</option>
-          <option value = ""></option>
-          <option value = ""></option>
-        </select>
-     </form>
-     <br>
-     <form>
-        <select name = "dropdown">
-          <option value = "local" selected>Local officials</option>
-          <option value = ""></option>
-          <option value = ""></option>
-        </select>
-     </form>
+    
 
        
 
@@ -48,6 +25,28 @@
         </div>
     <div class="row">
         <div class="three columns sidebar">
+            <p>Here's the list of officials. Select any one:</p>
+       <form>
+          <select id = "federalOfficials">
+            <option value = "federal" selected disabled>Federal officials</option>
+            
+          </select>
+       </form>
+       <br>
+       <form>
+        <select id = "stateOfficials">
+          <option value = "state" selected disabled>State officials</option>
+          
+        </select>
+     </form>
+     <br>
+     <form>
+        <select id = "localOfficials">
+          <option value = "local" selected disabled>Local officials</option>
+          
+          
+        </select>
+     </form>
  
         </div>
         <div class="nine columns main">
