@@ -97,3 +97,22 @@ function clickRep(){
 
     })
     };
+
+    function getNews() {
+        $.ajax({
+            url: "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=Inslee&api-key=IWE6hnGq7VzMyE3QxJe363KNU2gJmwbY",
+            method: "GET"
+        }).then(function (stories) {
+            // Creates a div to hold the news stories and displays it on the page.
+            var newsHolder = $("<div>");
+            $(".main").append(newsHolder);
+    
+            // For each story up to 5, creates a P tag and displays it on the page.
+            for (var i = 0; i < 5; i++) {
+                headline = stories.response.docs[i].abstract;
+                var eachStory = $("<p>");
+                eachStory.text(headline);
+                newsHolder.append(eachStory);
+            }
+        })
+    }
