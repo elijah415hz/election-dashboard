@@ -26,21 +26,24 @@ function getOfficials(address) {
 
 // function adds officials to dropdown menus
 function addOfficialButtons(offices, officials) {
-    // empty out current dropdown menus when user submits new location
+    console.log(offices)
+    console.log(officials)
+    // empty out current collapsible menus when user submits new location
     federalOfficialsMenu.empty()
     stateOfficialsMenu.empty()
     localOfficialsMenu.empty()
-    // create disabled select buttons for each dropdown menu
-    federalOfficialsMenu.html('<option disabled selected>Federal Officials</option>')
-    stateOfficialsMenu.html('<option disabled selected>State Officials</option>')
-    localOfficialsMenu.html('<option disabled selected>Local Officials</option>')
+    // create header buttons for each collapsible menu
+    federalOfficialsMenu.html('<div class="collapsible-header"><i class="material-icons">account_balance</i>Federal Officals</div>')
+    stateOfficialsMenu.html('<div class="collapsible-header"><i class="material-icons">account_balance</i>State Officials</div>')
+    localOfficialsMenu.html('<div class="collapsible-header active"><i class="material-icons">account_balance</i>Local Officials</div>')
 
 
     for (let i = 0; i < offices.length; i++) {
         var level = offices[i].levels[0]
-        var newOfficialBtn = $('<option>')
+        var newOfficialBtn = $('<div>')
         var officialName = officials[i].name
-        newOfficialBtn.text(officialName)
+        newOfficialBtn.attr('class', 'collapsible-body')
+        newOfficialBtn.append(`<span>${officialName}</span>`)
         newOfficialBtn.attr("data-index", i)
         switch (level) {
             case "country":
@@ -99,3 +102,22 @@ function clickRep(){
 
     })
     };
+
+    function getNews() {
+        $.ajax({
+            url: "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=Inslee&api-key=IWE6hnGq7VzMyE3QxJe363KNU2gJmwbY",
+            method: "GET"
+        }).then(function (stories) {
+            // Creates a div to hold the news stories and displays it on the page.
+            var newsHolder = $("<div>");
+            $(".main").append(newsHolder);
+    
+            // For each story up to 5, creates a P tag and displays it on the page.
+            for (var i = 0; i < 5; i++) {
+                headline = stories.response.docs[i].abstract;
+                var eachStory = $("<p>");
+                eachStory.text(headline);
+                newsHolder.append(eachStory);
+            }
+        })
+    }
