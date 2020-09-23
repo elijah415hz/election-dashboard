@@ -19,12 +19,31 @@ function getOfficials(address) {
     }).then(function (response) {
         var offices = response.offices
         var officials = response.officials
-        addOfficialButtons(offices, officials)
+        for (let i = 0; i < offices.length; i++) {
+            var level = offices[i].levels[0]
+            console.log(level);
+            switch (level) {
+                case "country":
+                    federal.push(officials[i])
+                    break;
+                case "administrativeArea1":
+                    state.push(officials[i])
+                    break;
+                case "administrativeArea2":
+                case "locality":
+                    local.push(officials[i])
+                    break;
+            }
+        }
+        addOfficialButtons(federal, state, local)
     })
 }
 
 // function adds officials to dropdown menus
-function addOfficialButtons(offices, officials) {
+function addOfficialButtons(federalArr, stateArr, localArr) {
+    federal = []
+    state = []
+    local = []
     // empty out current dropdown menus when user submits new location
     federalOfficialsMenu.empty()
     stateOfficialsMenu.empty()
@@ -34,26 +53,38 @@ function addOfficialButtons(offices, officials) {
     stateOfficialsMenu.html('<option disabled selected>State Officials</option>')
     localOfficialsMenu.html('<option disabled selected>Local Officials</option>')
 
-    for (let i = 0; i < offices.length; i++) {
-        var level = offices[i].levels[0]
+    // for each federal official
+    federalArr.forEach(function (official) {
+        // create a new option element
         var newOfficialBtn = $('<option>')
-        var officialName = officials[i].name
+        // store the name of the current official
+        var officialName = official.name
+        // change option text to official's name
         newOfficialBtn.text(officialName)
-        newOfficialBtn.attr("data-index", i)
-        switch (level) {
-            case "country":
-                federalOfficialsMenu.append(newOfficialBtn)
-                break;
-            case "administrativeArea1":
-                stateOfficialsMenu.append(newOfficialBtn)
-                break;
-            case "administrativeArea2":
-            case "locality":
-                localOfficialsMenu.append(newOfficialBtn)
-                break;
-        }
-    }
-    
+        // apend option to it's dropdown menu
+        federalOfficialsMenu.append(newOfficialBtn)
+    })
+    // for each state official
+    stateArr.forEach(function (official) {
+        // create a new option element
+        var newOfficialBtn = $('<option>')
+        // store the name of the current official
+        var officialName = official.name
+        newOfficialBtn.text(officialName)
+        // apend option to it's dropdown menu
+        stateOfficialsMenu.append(newOfficialBtn)
+    })
+    // for each local official
+    localArr.forEach(function (official) {
+        // create a new option element
+        var newOfficialBtn = $('<option>')
+        // store the name of the current official
+        var officialName = official.name
+        // change option text to official's name
+        newOfficialBtn.text(officialName)
+        // apend option to it's dropdown menu
+        localOfficialsMenu.append(newOfficialBtn)
+    })
 }
 
 // retrieve elected officials for location when user click's submit
@@ -63,19 +94,16 @@ $('#submitBtn').on('click', function (event) {
     var userAddress = addressInputEle.val()
     // get user's elected officials
     getOfficials(userAddress)
-    clickRep()
 })
 
 // repBtn is a placeholder for the buttons created under each dropdown. Replace it with whatever setting will capture those. 
 
 // I've used federal[0] as a placeholder in the information displays, as I'm not sure how we reference the correct array. If statement for each dropdown?
-function clickRep(){
+function clickRep() {
     // When user chooses a representative:
-    $(".sidebar").click(function(event){
+    repBtn.click(function () {
         // Clear out anything currently appended to the main display div
         $('.main').empty();
-        // Testing click event...
-        console.log(event.target.tagName)
         // create an img tag
         var repPic = $("<img src = '' alt = 'Picture of Representative'>");
         // Grab the img URL from the API object, if it exists
@@ -96,4 +124,25 @@ function clickRep(){
         $('.main').append(repInfo);
 
     })
-    };
+};
+
+
+// This function will search the NY Times for news about the official in question. Replace Inslee in the URL with a reference variable to the rep's name once we have it.
+function getNews() {
+    $.ajax({
+        url: "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=Inslee&api-key=IWE6hnGq7VzMyE3QxJe363KNU2gJmwbY",
+        method: "GET"
+    }).then(function (stories) {
+        // Creates a div to hold the news stories and displays it on the page.
+        var newsHolder = $("<div>");
+        $(".main").append(newsHolder);
+
+        // For each story up to 5, creates a P tag and displays it on the page.
+        for (var i = 0; i < 5; i++) {
+            headline = stories.response.docs[i].abstract;
+            var eachStory = $("<p>");
+            eachStory.text(headline);
+            newsHolder.append(eachStory);
+        }
+    })
+}
