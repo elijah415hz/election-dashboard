@@ -93,19 +93,60 @@ $('#submitBtn').on('click', function (event) {
     getOfficials(userAddress)
 })
 
-// Twitter info request, when ready, copy this into click event for elected official and build out the display functionality in the part of the ajax reqeuest after function (tweets). Replace 'response' in URL below with necessary reference to the google electeds' api response. 
-// var twitterSettings = {
-// 	"async": true,
-// 	"crossDomain": true,
-// 	"url": `https://e1yr-twitfeed-v1.p.rapidapi.com/feed.api?id=${response.officials[i].channels[1].id}`,
-// 	"method": "GET",
-// 	"headers": {
-// 		"x-rapidapi-host": "e1yr-twitfeed-v1.p.rapidapi.com",
-// 		"x-rapidapi-key": "321fc84846msh233ba135d69274fp1b3f3bjsnb87b309afa99"
-// 	}
-// };
+// repBtn is a placeholder for the buttons created under each dropdown. Replace it with whatever setting will capture those. 
 
-// $.ajax(twitterSettings).done(function (tweets) {
-// 	console.log(tweets); 
-// Use console log to get needed elements. CODE TO DISPLAY INFO ON PAGE GOES HERE
-// });
+// I've used federal[0] as a placeholder in the information displays, as I'm not sure how we reference the correct array. If statement for each dropdown?
+function clickRep(){
+    // When user chooses a representative:
+    repBtn.click(function(){
+        // Clear out anything currently appended to the main display div
+        $('.main').empty();
+        // create an img tag
+        var repPic = $("<img src = '' alt = 'Picture of Representative'>");
+        // Grab the img URL from the API object, if it exists
+        repPic.attr("src", federal[0].photoUrl);
+        // Display the image on the page
+        $('.main').append(repPic);
+        // Create a div to hold info about the rep
+        var repInfo = $("<div>");
+        // Insert information from API object:
+        repInfo.html(
+            `<p>Name: ${federal[0].name}</p>
+            <p>Party: ${federal[0].party}</p>
+            <p>Phone: ${federal[0].phones[0]}</p>
+            <p>Address: ${federal[0].address[0].line1}, ${federal[0].address[0].city}, ${federal[0].address[0].state}, ${federal[0].address[0].zip}</p>
+            <p>Website: ${federal[0].urls[0]}</p>`
+        );
+        // Display info on the page
+        $('.main').append(repInfo);
+
+    })
+    };
+
+ 
+
+    
+// Twitter info request, when ready, copy this into click event for elected official and build out the display functionality in the part of the ajax reqeuest after function (tweets). Replace 'GovInslee' in URL below with ${federal[0].channels[1].id} reference to the google electeds' api response. 
+var twitterSettings = {
+	"async": true,
+	"crossDomain": true,
+	"url": `https://e1yr-twitfeed-v1.p.rapidapi.com/feed.api?id=GovInslee`,
+	"method": "GET",
+	"headers": {
+		"x-rapidapi-host": "e1yr-twitfeed-v1.p.rapidapi.com",
+		"x-rapidapi-key": "321fc84846msh233ba135d69274fp1b3f3bjsnb87b309afa99"
+	}
+};
+
+$.ajax(twitterSettings).done(function (tweets) {
+    var tweetHolder = $('<div>');
+    $('.main').append(tweetHolder);
+    if (tweets != ""){
+    console.log(tweets); 
+    // tweetHolder.html(tweets);
+    console.log(tweets.channel);
+    } else {
+        tweetHolder.text("No Twitter information for this official")
+    };
+	
+});
