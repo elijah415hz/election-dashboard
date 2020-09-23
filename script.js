@@ -122,31 +122,3 @@ function clickRep(){
 
     })
     };
-
- 
-
-    
-// Twitter info request, when ready, copy this into click event for elected official and build out the display functionality in the part of the ajax reqeuest after function (tweets). Replace 'GovInslee' in URL below with ${federal[0].channels[1].id} reference to the google electeds' api response. 
-var twitterSettings = {
-	"async": true,
-	"crossDomain": true,
-	"url": `https://e1yr-twitfeed-v1.p.rapidapi.com/feed.api?id=GovInslee`,
-	"method": "GET",
-	"headers": {
-		"x-rapidapi-host": "e1yr-twitfeed-v1.p.rapidapi.com",
-		"x-rapidapi-key": "321fc84846msh233ba135d69274fp1b3f3bjsnb87b309afa99"
-	}
-};
-
-$.ajax(twitterSettings).done(function (tweets) {
-    var tweetHolder = $('<div>');
-    $('.main').append(tweetHolder);
-    if (tweets != ""){
-    console.log(tweets); 
-    // tweetHolder.html(tweets);
-    console.log(tweets.channel);
-    } else {
-        tweetHolder.text("No Twitter information for this official")
-    };
-	
-});
