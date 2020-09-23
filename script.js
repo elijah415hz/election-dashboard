@@ -41,6 +41,9 @@ function getOfficials(address) {
 
 // function adds officials to dropdown menus
 function addOfficialButtons(federalArr, stateArr, localArr) {
+    federal = []
+    state = []
+    local = []
     // empty out current dropdown menus when user submits new location
     federalOfficialsMenu.empty()
     stateOfficialsMenu.empty()
@@ -105,7 +108,10 @@ function clickRep(){
     $(".sidebar").click(function(event){
         // Clear out anything currently appended to the main display div
         $('.main').empty();
+<<<<<<< HEAD
         // Testing click event...
+=======
+>>>>>>> dev
         console.log(event.target)
         // create an img tag
         var repPic = $("<img src = '' alt = 'Picture of Representative'>");
