@@ -43,7 +43,7 @@ function addOfficialButtons(offices, officials) {
         var newOfficialBtn = $('<div>')
         var officialName = officials[i].name
         newOfficialBtn.attr('class', 'collapsible-body')
-        newOfficialBtn.append(`<span>${officialName}</span>`)
+        newOfficialBtn.text(officialName)
         newOfficialBtn.attr("data-index", i)
         switch (level) {
             case "country":
@@ -81,6 +81,7 @@ function clickRep(){
         $('.main').empty();
         // Testing click event...
         var index = event.target.getAttribute("data-index")
+        console.log(index)
         // create an img tag
         var repPic = $("<img src = '' alt = 'Picture of Representative'>");
         // Grab the img URL from the API object, if it exists
@@ -94,7 +95,7 @@ function clickRep(){
             `<p>Name: ${officials[index].name}</p>
             <p>Party: ${officials[index].party}</p>
             <p>Phone: ${officials[index].phones[0]}</p>
-            <p>Address: ${officials[index].address[0].line1}, ${federal[0].address[0].city}, ${federal[0].address[0].state}, ${federal[0].address[0].zip}</p>
+            <p>Address: ${officials[index].address[0].line1}, ${officials[index].address[0].city}, ${officials[index].address[0].state}, ${officials[index].address[0].zip}</p>
             <p>Website: ${officials[index].urls[0]}</p>`
         );
         // Display info on the page
