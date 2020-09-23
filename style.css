@@ -3,27 +3,6 @@ body {
     padding: 0;
 } 
 
-.navbar {
-    background-color: #3E50F0;
-    color: white;
-    text-align: center;
-    border-bottom-left-radius: 7px;
-    border-bottom-right-radius: 7px;
-    position: fixed;
-    top: 0;
-    width: 100%;
-
-}
-
-.form {
-    text-align: center;
-    margin-top: 100px;
-}
-
-.button {
-    background-color: red;
-    color: white;
-}
 
 .sidebar {
     background-color: #eee;

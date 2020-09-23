@@ -4,67 +4,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
+    
+    
+    <title>Election Help!</title>
+    <!--Responsive Meta Tag-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <!-- Local stylesheet -->
     <link rel="stylesheet" href="style.css">
-
-</head>
-<title>Election Help!</title>
-<!--Responsive Meta Tag-->
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<!--Import Google Icon Font-->
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<!--Import materialize.css-->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
 
 </head>
 
 <body>
-
-    <div class="navbar">
-        <h1>My Officials Dashboard</h1>
+    <nav>
+    <div class="nav-wrapper">
+        <a class="brand-logo center">My Officials Dashboard</a>
     </div>
-    <div class="row form">
-        <form>
-            <input type="text" name="user-address" id="userAddress" placeholder="Enter your address">
-            <button class="button" id="submitBtn">Submit</button>
+    </nav>
+    <div class="row">
+        <form class="col s12 valign-wrapper">
+            <div class="input-field col s8">
+            <input type="text" name="user-address" id="userAddress" class="right-align">
+            <label for="user-address">Address</label>
+            </div>
+            <div class="col s4">
+            <button class="waves-effect waves-light btn" id="submitBtn">Submit</button>
+            </div>
         </form>
+
     </div>
 
-    <!-- side bar with dropdowns -->
-    <!-- <div class="row">
-        <div class="two columns sidebar">
-            <p>Here's the list of officials. Select any one:</p>
-            <form>
-                <select class="officialsList" name="dropdown" id="federalOfficials">
-                    <option value="federal" selected>Federal officials</option>
-                    <option value="state"></option>
-                    <option value="local"></option>
-                </select>
-            </form>
-
-            <br>
-            <form>
-                <select class="officialsList" name="dropdown">
-                    <option value="state" selected>State officials</option>
-                    <option value=""></option>
-                    <option value=""></option>
-                </select>
-            </form>
-            <br>
-            <form>
-                <select class="officialsList" name="dropdown">
-                    <option value="local" selected>Local officials</option>
-                    <option value=""></option>
-                    <option value=""></option>
-                </select>
-            </form>
-        </div> -->
         <div class="row">
               <div class="container col s3 sidebar">
 
         <ul class="collapsible popout" data-collapsible="accordion">
             <li id='federalOfficials'>
                 <div class="collapsible-header"><i class="material-icons">account_balance</i>Federal Officals</div>
+               
             </li>
             <li id='stateOfficials'>
                 <div class="collapsible-header"><i class="material-icons">account_balance</i>State Officials</div>
