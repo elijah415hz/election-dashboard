@@ -6,7 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
     <link rel="stylesheet" href="style.css">
-    <title>Election Help!</title>
+
+</head>
+<title>Election Help!</title>
+<!--Responsive Meta Tag-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!--Import Google Icon Font-->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!--Import materialize.css-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
 
 </head>
 
@@ -27,11 +35,11 @@
     </div>
 
     <!-- side bar with dropdowns -->
-    <div class="row">
+    <!-- <div class="row">
         <div class="two columns sidebar">
             <p>Here's the list of officials. Select any one:</p>
             <form>
-                <select name="dropdown" id = "federalOfficials">
+                <select class="officialsList" name="dropdown" id="federalOfficials">
                     <option value="federal" selected>Federal officials</option>
                     <option value="state"></option>
                     <option value="local"></option>
@@ -39,7 +47,7 @@
             </form>
             <br>
             <form>
-                <select name="dropdown">
+                <select class="officialsList" name="dropdown">
                     <option value="state" selected>State officials</option>
                     <option value=""></option>
                     <option value=""></option>
@@ -47,24 +55,58 @@
             </form>
             <br>
             <form>
-                <select name="dropdown">
+                <select class="officialsList" name="dropdown">
                     <option value="local" selected>Local officials</option>
                     <option value=""></option>
                     <option value=""></option>
                 </select>
             </form>
-        </div>
+        </div> -->
+        <div class="row">
+              <div class="container col s3">
 
-        <!-- contact info -->
-        <div class="nine columns main">
+        <ul class="collapsible popout" data-collapsible="accordion">
+            <li>
+                <div class="collapsible-header"><i class="material-icons">account_balance</i>Federal Officals</div>
+                <div class="collapsible-body">
+                    <span>XXXXX</span>
+                    <span>XXXXX</span>
+                </div>
+                <div class="collapsible-body">
+                    <span>XXXXX</span>
+                    <span>XXXXX</span>
+                </div>
+            </li>
+            <li>
+                <div class="collapsible-header"><i class="material-icons">account_balance</i>State Officials</div>
+                <div class="collapsible-body"><span> XXXXXXX</span></div>
+            </li>
+            <li>
+                <div class="collapsible-header active"><i class="material-icons">account_balance</i>Local Officials
+                </div>
+                <div class="collapsible-body"><span>XXXXXXX</span></div>
+            </li>
 
-        </div>
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $('.collapsible').collapsible();
+                    });
+                </script>
+                <!-- contact info -->
+                <div class="nine columns main">
+
+                </div>
     </div>
+        </div>
+  
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="script.js"></script>
-
+    <!--Import jQuery Library-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <!--Import materialize.js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
 </body>
 
 </html>
