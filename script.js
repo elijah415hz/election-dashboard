@@ -9,6 +9,7 @@ var localOfficialsMenu = $('#localOfficials')
 var offices = [];
 var officials = [];
 var index = "";
+var officeIndex = "";
 
 // var and options for autocomplete
 var placesInstance = places({
@@ -106,6 +107,7 @@ function clickRep() {
         // Testing click event...
 
         index = event.target.getAttribute("data-official-index")
+        officeIndex = event.target.getAttribute("data-office-index")
 
         // Creates and appends card
         var infoCard = $("<div class = 'card horizontal'>")
@@ -131,10 +133,10 @@ function clickRep() {
             var repName = `<p>Name: ${officials[index].name}</p>`;
             repInfo.append(repName);
         };
-        // if (offices[index].name){
-        //     var repTitle = `<p>Title: ${offices[index].name}`
-        //     repInfo.append(repTitle);
-        // };
+        if (offices[officeIndex].name){
+            var repTitle = `<p>Title: ${offices[officeIndex].name}`
+            repInfo.append(repTitle);
+        };
         if (officials[index].party){
             var repParty = `<p>Party: ${officials[index].party}</p>`;
             repInfo.append(repParty);
