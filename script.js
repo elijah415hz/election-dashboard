@@ -10,6 +10,7 @@ var offices = [];
 var officials = [];
 var index = "";
 var officeIndex = "";
+var preloader = "";
 
 // var and options for autocomplete
 var placesInstance = places({
@@ -96,9 +97,7 @@ $('#submitBtn').on('click', function (event) {
     clickRep()
 })
 
-// repBtn is a placeholder for the buttons created under each dropdown. Replace it with whatever setting will capture those. 
-
-// I've used federal[0] as a placeholder in the information displays, as I'm not sure how we reference the correct array. If statement for each dropdown?
+// This function pulls and displays the relevant information about the rep when the user clicks on their name in the sidebar. It is used in conjunction with the getNews function below:
 function clickRep() {
     // When user chooses a representative:
     $(".sidebar").click(function (event) {
@@ -109,15 +108,15 @@ function clickRep() {
         index = event.target.getAttribute("data-official-index")
         officeIndex = event.target.getAttribute("data-office-index")
 
-        // Creates and appends card
+        // Creates and appends information card
         var infoCard = $("<div class = 'card horizontal'>")
         $(".main").append(infoCard)
 
-        // Creates image placement on card
+        // Creates image placement on card, if we have an image URL to reference
         if (officials[index].photoUrl){
         var cardImage = $("<div class = 'card-image'>");
         infoCard.append(cardImage);
-        // Creates image and populates it with picture from API, if available
+
         var repPic = $("<img src = '' alt = 'Picture of Representative'>");
         repPic.attr("src", officials[index].photoUrl);
         $('.card-image').append(repPic);
@@ -128,7 +127,8 @@ function clickRep() {
         infoCard.append(repContentBox);
         var repInfo = $("<div class = 'card-content'>");
         repContentBox.append(repInfo);
-        // Insert information from API object, if applicable:
+
+        // If statements check to be sure that relevant information exists in the object, displays it only if it does
         if (officials[index].name){
             var repName = `<p>Name: ${officials[index].name}</p>`;
             repInfo.append(repName);
@@ -165,14 +165,17 @@ function clickRep() {
             var repWebsite = `<p>Website: ${officials[index].urls[0]}</p>`;
             repInfo.append(repWebsite);
         };
-        
+
+        // Creates loading bar as news loads in
+        preloader = $("<div class='progress'><div class='indeterminate'></div></div>");
+        $(".main").append(preloader);
+
         // Runs getNews function to display news stories:
         getNews();
-
     })
 };
 
-
+// This function pulls the 5 most recent news stories from the NYT API and displays them on the page.
     function getNews() {
         $.ajax({
             url: `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${officials[index].name}&api-key=IWE6hnGq7VzMyE3QxJe363KNU2gJmwbY`,
@@ -181,10 +184,8 @@ function clickRep() {
             // Creates a div to hold the news stories and displays it on the page.
             var newsCard = $("<div class = 'card horizontal'>");
             $(".main").append(newsCard);
-
             var repNewsBox = $("<div class = 'card-stacked'>");
             newsCard.append(repNewsBox);
-
             var repNews = $("<div class = 'card-content'>");
             repNewsBox.append(repNews);
             var newsHeader = $("<b>Recent News:</b>");
@@ -197,6 +198,9 @@ function clickRep() {
                 eachStory.html(`${headline}<br><br>`);
                 repNews.append(eachStory);
             }
+        }).done(function () {
+            // Once news has loaded in, removes the preloader from the screen
+            preloader.remove();
         })
     }
 
