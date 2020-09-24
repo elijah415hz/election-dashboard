@@ -10,6 +10,16 @@ var offices = [];
 var officials = [];
 var index = "";
 
+// var and options for autocomplete
+var placesInstance = places({
+    appId: 'pl1GM2GV06CF',
+    apiKey: 'e2ceea5d1cad7790d5412914a90a42b5',
+    container: document.querySelector('#userAddress')
+});
+placesInstance.configure({
+    countries: ['us'] 
+})
+
 // Ajax request to Google Civic Info
 function getOfficials(address) {
     var queryURL = "https://www.googleapis.com/civicinfo/v2/representatives?key=AIzaSyAY3D8Rvr86w2k066vbIV1mpziRwWCO2kc&address="
@@ -38,26 +48,41 @@ function addOfficialButtons(offices, officials) {
 
 
     for (let i = 0; i < offices.length; i++) {
+        // Get level value of office to parse officials into Federal, State, Local
         var level = offices[i].levels[0]
-        var newOfficialBtn = $('<div>')
-        var officialName = officials[i].name
-        newOfficialBtn.attr('class', 'collapsible-body')
-        newOfficialBtn.text(officialName)
-        newOfficialBtn.attr("data-index", i)
-        switch (level) {
-            case "country":
-                federalOfficialsMenu.append(newOfficialBtn)
-                break;
-            case "administrativeArea1":
-                stateOfficialsMenu.append(newOfficialBtn)
-                break;
-            case "administrativeArea2":
-            case "locality":
-                localOfficialsMenu.append(newOfficialBtn)
-                break;
+        // Get indices of officials with that office title
+        var officialIndexArr = offices[i].officialIndices
+        // Loop over indices and add officials to the page
+        for (var j=0; j<officialIndexArr.length; j++) {
+            var officialIndex = officialIndexArr[j]
+            // Make element to hold official
+            var newOfficialBtn = $('<div>')
+            // Grab official's name
+            var officialName = officials[officialIndex].name
+            // Add styling to make collapsible dropdowns work
+            newOfficialBtn.attr('class', 'collapsible-body')
+            // Add name
+            newOfficialBtn.text(officialName)
+            // Add index of the office
+            newOfficialBtn.attr("data-office-index", i)
+            // Add index of official
+            newOfficialBtn.attr("data-official-index", officialIndexArr[j])
+            // Append to appropriate menu
+            switch (level) {
+                case "country":
+                    federalOfficialsMenu.append(newOfficialBtn)
+                    break;
+                case "administrativeArea1":
+                    stateOfficialsMenu.append(newOfficialBtn)
+                    break;
+                case "administrativeArea2":
+                case "locality":
+                    localOfficialsMenu.append(newOfficialBtn)
+                    break;
+            }
         }
     }
-    
+
 }
 
 // retrieve elected officials for location when user click's submit
@@ -73,13 +98,15 @@ $('#submitBtn').on('click', function (event) {
 // repBtn is a placeholder for the buttons created under each dropdown. Replace it with whatever setting will capture those. 
 
 // I've used federal[0] as a placeholder in the information displays, as I'm not sure how we reference the correct array. If statement for each dropdown?
-function clickRep(){
+function clickRep() {
     // When user chooses a representative:
-    $(".sidebar").click(function(event){
+    $(".sidebar").click(function (event) {
         // Clear out anything currently appended to the main display div
         $('.main').empty();
         // Testing click event...
-        index = event.target.getAttribute("data-index")
+
+        index = event.target.getAttribute("data-official-index")
+
         // Creates and appends card
         var infoCard = $("<div class = 'card horizontal'>")
         $(".main").append(infoCard)
@@ -141,7 +168,8 @@ function clickRep(){
         getNews();
 
     })
-    };
+};
+
 
     function getNews() {
         $.ajax({
@@ -169,3 +197,4 @@ function clickRep(){
             }
         })
     }
+
