@@ -9,4 +9,7 @@ body {
     border-radius: 7px;
     
 }
-
+/* hides the gps icon from usergi */
+.ap-input-icon {
+    display: none;
+}
