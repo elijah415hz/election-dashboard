@@ -13,16 +13,17 @@ var index = "";
 var officeIndex = "";
 var preloader = "";
 
-// var and options for autocomplete
-var placesInstance = places({
-    appId: 'pl1GM2GV06CF',
-    apiKey: 'e2ceea5d1cad7790d5412914a90a42b5',
-    container: document.querySelector('#userAddress')
-});
-placesInstance.configure({
-    countries: ['us'] 
-})
-
+(function () {
+    var placesAutocomplete = places({
+        appId: 'pl1GM2GV06CF',
+        apiKey: 'e2ceea5d1cad7790d5412914a90a42b5',
+        container: document.querySelector('#userAddress'),
+    });
+    placesAutocomplete.configure({
+        aroundLatLngViaIP: false,
+        countries: ['us']
+    });
+})();
 // Ajax request to Google Civic Info
 function getOfficials(address) {
     var queryURL = "https://www.googleapis.com/civicinfo/v2/representatives?key=AIzaSyAY3D8Rvr86w2k066vbIV1mpziRwWCO2kc&address="
@@ -56,7 +57,7 @@ function addOfficialButtons(offices, officials) {
         // Get indices of officials with that office title
         var officialIndexArr = offices[i].officialIndices
         // Loop over indices and add officials to the page
-        for (var j=0; j<officialIndexArr.length; j++) {
+        for (var j = 0; j < officialIndexArr.length; j++) {
             var officialIndex = officialIndexArr[j]
             // Make element to hold official
             var newOfficialBtn = $('<div>')
