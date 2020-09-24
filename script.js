@@ -9,6 +9,16 @@ var localOfficialsMenu = $('#localOfficials')
 var offices = [];
 var officials = [];
 
+// var and options for autocomplete
+var placesInstance = places({
+    appId: 'pl1GM2GV06CF',
+    apiKey: 'e2ceea5d1cad7790d5412914a90a42b5',
+    container: document.querySelector('#userAddress')
+});
+placesInstance.configure({
+    countries: ['us'] 
+})
+
 // Ajax request to Google Civic Info
 function getOfficials(address) {
     var queryURL = "https://www.googleapis.com/civicinfo/v2/representatives?key=AIzaSyAY3D8Rvr86w2k066vbIV1mpziRwWCO2kc&address="
