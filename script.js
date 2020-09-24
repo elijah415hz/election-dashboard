@@ -6,6 +6,7 @@ var addressInputEle = $('#userAddress')
 var federalOfficialsMenu = $('#federalOfficials')
 var stateOfficialsMenu = $('#stateOfficials')
 var localOfficialsMenu = $('#localOfficials')
+var submitBtnClicked = false
 var offices = [];
 var officials = [];
 var index = "";
@@ -46,7 +47,7 @@ function addOfficialButtons(offices, officials) {
     // create header buttons for each collapsible menu
     federalOfficialsMenu.html('<div class="collapsible-header"><i class="material-icons">account_balance</i>Federal Officials</div>')
     stateOfficialsMenu.html('<div class="collapsible-header"><i class="material-icons">account_balance</i>State Officials</div>')
-    localOfficialsMenu.html('<div class="collapsible-header active"><i class="material-icons">account_balance</i>Local Officials</div>')
+    localOfficialsMenu.html('<div class="collapsible-header"><i class="material-icons">account_balance</i>Local Officials</div>')
 
 
     for (let i = 0; i < offices.length; i++) {
@@ -88,13 +89,39 @@ function addOfficialButtons(offices, officials) {
 }
 
 // retrieve elected officials for location when user click's submit
-$('#submitBtn').on('click', function (event) {
+$('#submitBtn').on('click', function(event) {
     event.preventDefault()
-    // get user input
-    var userAddress = addressInputEle.val()
-    // get user's elected officials
-    getOfficials(userAddress)
-    clickRep()
+    // create reference to any active menu if it exists
+    var activeEle = document.querySelector('.collapsible-header.active')
+    var timeToWait;
+    // if there is an active menu...
+    if (activeEle) {
+        // simulate a click of that menu to close it
+        activeEle.click()
+        // set timeToWait to .5 sec to give menu time to close
+        timeToWait = 500
+    } else {
+        // if all menus are closed, allow shake animations to first right after clicking submit
+        timeToWait = 0
+    }
+    setTimeout(function() {
+        if (!submitBtnClicked) {
+            // set var to true so animations can't be fired while they are currently running
+            submitBtnClicked = true
+            // separate menu headers and make them shake twice
+            $('.collapsible-header').animate({ marginTop: '10px', marginBottom: '10px' }, 100)
+            $('.collapsible-header').effect('shake', { direction: 'left', distance: '10', times: 1}, 200)
+            $('.collapsible-header').animate({ marginTop: '0', marginBottom: '0' }, 200, function () {
+                // after final animation runs, set var back to false so animations can be fired again
+                submitBtnClicked = false
+                // get user input
+                var userAddress = addressInputEle.val()
+                // get user's elected officials
+                getOfficials(userAddress)
+                clickRep()
+            })
+        }
+    }, timeToWait)
 })
 
 // This function pulls and displays the relevant information about the rep when the user clicks on their name in the sidebar. It is used in conjunction with the getNews function below:
@@ -102,6 +129,8 @@ function clickRep() {
     // When user chooses a representative:
     $(".sidebar").click(function (event) {
         // Clear out anything currently appended to the main display div
+        if (!($(event.target).hasClass("collapsible-body"))) return;
+        // collapsible-body
         $('.main').empty();
         // Testing click event...
 
