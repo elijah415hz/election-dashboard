@@ -102,6 +102,8 @@ function clickRep() {
     // When user chooses a representative:
     $(".sidebar").click(function (event) {
         // Clear out anything currently appended to the main display div
+        if (!($(event.target).hasClass("collapsible-body"))) return;
+        // collapsible-body
         $('.main').empty();
         // Testing click event...
 
