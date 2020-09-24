@@ -174,6 +174,10 @@ function clickRep() {
             var repPhone = `<p>Phone: ${officials[index].phones[0]}</p>`;
             repInfo.append(repPhone);
         };
+        if (officials[index].emails){
+            var repEmail = `<p>Email: ${officials[index].emails[0]}</p>`;
+            repInfo.append(repEmail);
+        };
         if (officials[index].address[0].line1){
             var repAddress1 = `<p>Address: ${officials[index].address[0].line1}</p>`;
             repInfo.append(repAddress1);
@@ -186,12 +190,12 @@ function clickRep() {
             var repAddress3 = `<p>${officials[index].address[0].line3}</p>`;
             repInfo.append(repAddress3);
         };
-        if (officials[index].city && officials[index].state && officials[index].zip){
-            var repCityStateZip = `<p>${officials[index].city}, ${officials[index].state}, ${officials[index].zip}</p>`;
-            repInfo.append(repCity);
+        if (officials[index].address[0].city && officials[index].address[0].state != "" && officials[index].address[0].zip != ""){
+            var repCityStateZip = `<p>${officials[index].address[0].city}, ${officials[index].address[0].state}, ${officials[index].address[0].zip}</p>`;
+            repInfo.append(repCityStateZip);
         };
-        if (officials[index].urls[0]){
-            var repWebsite = `<p>Website: ${officials[index].urls[0]}</p>`;
+        if (officials[index].urls){
+            var repWebsite = `<a href = '${officials[index].urls[0]}'>Website</a>`;
             repInfo.append(repWebsite);
         };
 
