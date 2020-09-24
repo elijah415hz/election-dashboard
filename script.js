@@ -9,19 +9,11 @@ var localOfficialsMenu = $('#localOfficials')
 var offices = [];
 var officials = [];
 
-// var and options for autocomplete
-// var placesInstance = places({
-//     appId: 'pl1GM2GV06CF',
-//     apiKey: 'e2ceea5d1cad7790d5412914a90a42b5',
-//     container: document.querySelector('#userAddress')
-// });
 (function () {
     var placesAutocomplete = places({
         appId: 'pl1GM2GV06CF',
         apiKey: 'e2ceea5d1cad7790d5412914a90a42b5',
         container: document.querySelector('#userAddress'),
-        // style: false,
-        // debug: true
     });
     placesAutocomplete.configure({
         aroundLatLngViaIP: false,
