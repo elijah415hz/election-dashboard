@@ -33,7 +33,7 @@ function addOfficialButtons(offices, officials) {
     stateOfficialsMenu.empty()
     localOfficialsMenu.empty()
     // create header buttons for each collapsible menu
-    federalOfficialsMenu.html('<div class="collapsible-header"><i class="material-icons">account_balance</i>Federal Officals</div>')
+    federalOfficialsMenu.html('<div class="collapsible-header"><i class="material-icons">account_balance</i>Federal Officials</div>')
     stateOfficialsMenu.html('<div class="collapsible-header"><i class="material-icons">account_balance</i>State Officials</div>')
     localOfficialsMenu.html('<div class="collapsible-header active"><i class="material-icons">account_balance</i>Local Officials</div>')
 
@@ -82,14 +82,21 @@ function clickRep(){
         // Testing click event...
         var index = event.target.getAttribute("data-index")
         console.log(index)
-        // create an img tag
+        // Creates and appends card
+        var infoCard = $("<div class = 'card horizontal'>")
+        $(".main").append(infoCard)
+        // Creates image placement on card
+        var cardImage = $("<div class = 'card-image'>")
+        $(".card").append(cardImage)
+        // Creates image and populates it with picture from API, if available
         var repPic = $("<img src = '' alt = 'Picture of Representative'>");
-        // Grab the img URL from the API object, if it exists
         repPic.attr("src", officials[index].photoUrl);
-        // Display the image on the page
-        $('.main').append(repPic);
+        $('.card-image').append(repPic);
+
         // Create a div to hold info about the rep
-        var repInfo = $("<div>");
+        var repContentBox = $("<div class = 'card-stacked'>");
+        $(".card").append(repContentBox);
+        var repInfo = $("<div class = 'card-content'>")
         // Insert information from API object:
         repInfo.html(
             `<p>Name: ${officials[index].name}</p>
@@ -99,14 +106,16 @@ function clickRep(){
             <p>Website: ${officials[index].urls[0]}</p>`
         );
         // Display info on the page
-        $('.main').append(repInfo);
+        $('.card-stacked').append(repInfo);
+        // Runs getNews function to display news stories:
+        getNews();
 
     })
     };
 
     function getNews() {
         $.ajax({
-            url: "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=Inslee&api-key=IWE6hnGq7VzMyE3QxJe363KNU2gJmwbY",
+            url: `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${officials[index].name}&api-key=IWE6hnGq7VzMyE3QxJe363KNU2gJmwbY`,
             method: "GET"
         }).then(function (stories) {
             // Creates a div to hold the news stories and displays it on the page.
