@@ -8,6 +8,17 @@ var stateOfficialsMenu = $('#stateOfficials')
 var localOfficialsMenu = $('#localOfficials')
 var offices = [];
 var officials = [];
+var index = "";
+
+// var and options for autocomplete
+var placesInstance = places({
+    appId: 'pl1GM2GV06CF',
+    apiKey: 'e2ceea5d1cad7790d5412914a90a42b5',
+    container: document.querySelector('#userAddress')
+});
+placesInstance.configure({
+    countries: ['us'] 
+})
 
 // Ajax request to Google Civic Info
 function getOfficials(address) {
@@ -26,8 +37,6 @@ function getOfficials(address) {
 
 // function adds officials to dropdown menus
 function addOfficialButtons(offices, officials) {
-    console.log(offices)
-    console.log(officials)
     // empty out current collapsible menus when user submits new location
     federalOfficialsMenu.empty()
     stateOfficialsMenu.empty()
@@ -39,26 +48,41 @@ function addOfficialButtons(offices, officials) {
 
 
     for (let i = 0; i < offices.length; i++) {
+        // Get level value of office to parse officials into Federal, State, Local
         var level = offices[i].levels[0]
-        var newOfficialBtn = $('<div>')
-        var officialName = officials[i].name
-        newOfficialBtn.attr('class', 'collapsible-body')
-        newOfficialBtn.text(officialName)
-        newOfficialBtn.attr("data-index", i)
-        switch (level) {
-            case "country":
-                federalOfficialsMenu.append(newOfficialBtn)
-                break;
-            case "administrativeArea1":
-                stateOfficialsMenu.append(newOfficialBtn)
-                break;
-            case "administrativeArea2":
-            case "locality":
-                localOfficialsMenu.append(newOfficialBtn)
-                break;
+        // Get indices of officials with that office title
+        var officialIndexArr = offices[i].officialIndices
+        // Loop over indices and add officials to the page
+        for (var j=0; j<officialIndexArr.length; j++) {
+            var officialIndex = officialIndexArr[j]
+            // Make element to hold official
+            var newOfficialBtn = $('<div>')
+            // Grab official's name
+            var officialName = officials[officialIndex].name
+            // Add styling to make collapsible dropdowns work
+            newOfficialBtn.attr('class', 'collapsible-body')
+            // Add name
+            newOfficialBtn.text(officialName)
+            // Add index of the office
+            newOfficialBtn.attr("data-office-index", i)
+            // Add index of official
+            newOfficialBtn.attr("data-official-index", officialIndexArr[j])
+            // Append to appropriate menu
+            switch (level) {
+                case "country":
+                    federalOfficialsMenu.append(newOfficialBtn)
+                    break;
+                case "administrativeArea1":
+                    stateOfficialsMenu.append(newOfficialBtn)
+                    break;
+                case "administrativeArea2":
+                case "locality":
+                    localOfficialsMenu.append(newOfficialBtn)
+                    break;
+            }
         }
     }
-    
+
 }
 
 // retrieve elected officials for location when user click's submit
@@ -74,44 +98,78 @@ $('#submitBtn').on('click', function (event) {
 // repBtn is a placeholder for the buttons created under each dropdown. Replace it with whatever setting will capture those. 
 
 // I've used federal[0] as a placeholder in the information displays, as I'm not sure how we reference the correct array. If statement for each dropdown?
-function clickRep(){
+function clickRep() {
     // When user chooses a representative:
-    $(".sidebar").click(function(event){
+    $(".sidebar").click(function (event) {
         // Clear out anything currently appended to the main display div
         $('.main').empty();
         // Testing click event...
-        var index = event.target.getAttribute("data-index")
-        console.log(index)
+
+        index = event.target.getAttribute("data-official-index")
+
         // Creates and appends card
         var infoCard = $("<div class = 'card horizontal'>")
         $(".main").append(infoCard)
+
         // Creates image placement on card
-        var cardImage = $("<div class = 'card-image'>")
-        $(".card").append(cardImage)
+        if (officials[index].photoUrl){
+        var cardImage = $("<div class = 'card-image'>");
+        infoCard.append(cardImage);
         // Creates image and populates it with picture from API, if available
         var repPic = $("<img src = '' alt = 'Picture of Representative'>");
         repPic.attr("src", officials[index].photoUrl);
         $('.card-image').append(repPic);
+        };
 
         // Create a div to hold info about the rep
         var repContentBox = $("<div class = 'card-stacked'>");
-        $(".card").append(repContentBox);
-        var repInfo = $("<div class = 'card-content'>")
-        // Insert information from API object:
-        repInfo.html(
-            `<p>Name: ${officials[index].name}</p>
-            <p>Party: ${officials[index].party}</p>
-            <p>Phone: ${officials[index].phones[0]}</p>
-            <p>Address: ${officials[index].address[0].line1}, ${officials[index].address[0].city}, ${officials[index].address[0].state}, ${officials[index].address[0].zip}</p>
-            <p>Website: ${officials[index].urls[0]}</p>`
-        );
-        // Display info on the page
-        $('.card-stacked').append(repInfo);
+        infoCard.append(repContentBox);
+        var repInfo = $("<div class = 'card-content'>");
+        repContentBox.append(repInfo);
+        // Insert information from API object, if applicable:
+        if (officials[index].name){
+            var repName = `<p>Name: ${officials[index].name}</p>`;
+            repInfo.append(repName);
+        };
+        // if (offices[index].name){
+        //     var repTitle = `<p>Title: ${offices[index].name}`
+        //     repInfo.append(repTitle);
+        // };
+        if (officials[index].party){
+            var repParty = `<p>Party: ${officials[index].party}</p>`;
+            repInfo.append(repParty);
+        };
+        if (officials[index].phones[0]){
+            var repPhone = `<p>Phone: ${officials[index].phones[0]}</p>`;
+            repInfo.append(repPhone);
+        };
+        if (officials[index].address[0].line1){
+            var repAddress1 = `<p>Address: ${officials[index].address[0].line1}</p>`;
+            repInfo.append(repAddress1);
+        };
+        if (officials[index].address[0].line2){
+            var repAddress2 = `<p>${officials[index].address[0].line2}</p>`;
+            repInfo.append(repAddress2);
+        };
+        if (officials[index].address[0].line3){
+            var repAddress3 = `<p>${officials[index].address[0].line3}</p>`;
+            repInfo.append(repAddress3);
+        };
+        if (officials[index].city && officials[index].state && officials[index].zip){
+            var repCityStateZip = `<p>${officials[index].city}, ${officials[index].state}, ${officials[index].zip}</p>`;
+            repInfo.append(repCity);
+        };
+        if (officials[index].urls[0]){
+            var repWebsite = `<p>Website: ${officials[index].urls[0]}</p>`;
+            repInfo.append(repWebsite);
+        };
+        
         // Runs getNews function to display news stories:
         getNews();
 
     })
-    };
+};
+
 
     function getNews() {
         $.ajax({
@@ -119,15 +177,24 @@ function clickRep(){
             method: "GET"
         }).then(function (stories) {
             // Creates a div to hold the news stories and displays it on the page.
-            var newsHolder = $("<div>");
-            $(".main").append(newsHolder);
+            var newsCard = $("<div class = 'card horizontal'>");
+            $(".main").append(newsCard);
+
+            var repNewsBox = $("<div class = 'card-stacked'>");
+            newsCard.append(repNewsBox);
+
+            var repNews = $("<div class = 'card-content'>");
+            repNewsBox.append(repNews);
+            var newsHeader = $("<b>Recent News:</b>");
+            repNews.append(newsHeader);
     
             // For each story up to 5, creates a P tag and displays it on the page.
             for (var i = 0; i < 5; i++) {
                 headline = stories.response.docs[i].abstract;
                 var eachStory = $("<p>");
-                eachStory.text(headline);
-                newsHolder.append(eachStory);
+                eachStory.html(`${headline}<br><br>`);
+                repNews.append(eachStory);
             }
         })
     }
+

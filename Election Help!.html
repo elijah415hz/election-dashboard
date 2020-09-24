@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<!-- saved from url=(0032)http://127.0.0.1:5502/index.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>Election Help!</title>
+    <!--Responsive Meta Tag-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Import Google Icon Font-->
+    <link href="./Election Help!_files/icon" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link rel="stylesheet" href="./Election Help!_files/materialize.min.css">
+    <!-- Local stylesheet -->
+    <link rel="stylesheet" href="./Election Help!_files/style.css">
+
+</head>
+
+<body>
+    <nav>
+        <div class="nav-wrapper">
+            <a class="brand-logo center">My Officials Dashboard</a>
+        </div>
+    </nav>
+    <div class="row">
+        <form class="col s12 offset-m2 valign-wrapper" _lpchecked="1">
+            <div class="input-field col s8">
+                <input type="text" name="user-address" id="userAddress" class="right-align" autocomplete="off" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAANJJREFUOBHdUzsOgzAMfaDOiIETcBjUDozcjetwh3CBdsnAgLiAa1uyG+gAtJ1qyYljv+dPAgBwY72z0kEV7JXV5QzZighHJeNVnJ+IcJGfYVZVhbZt3yjW1u7edR2FEAynibyDsiw9c1EUyHMPIY1lmXbuWEX1fY9pmtA0Deq6RowRwzAoKI05KzFeZRLnWVNn4jZtNuIRiEfws8XkDsZxNL/WuVi1eZ7NxLIsbothMSKC6FYs4+7Oz0j8jIbTPD/5kB7blg6cV5yvf6YDBf8a8gSLtXzq+l6rIQAAAABJRU5ErkJggg==&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;">
+                <label for="user-address" class="active">Address</label>
+            </div>
+            <div class="col s12">
+                <button class="waves-effect waves-light btn" id="submitBtn">Submit</button>
+            </div>
+        </form>
+
+    </div>
+
+    <div class="row">
+        <div class="col s12 m4 l3 sidebar">
+
+            <ul class="collapsible popout" data-collapsible="accordion">
+                <li id="federalOfficials">
+                    <div class="collapsible-header"><i class="material-icons">account_balance</i>Federal Officials</div>
+                </li>
+                <li id="stateOfficials">
+                    <div class="collapsible-header"><i class="material-icons">account_balance</i>State Officials</div>
+                </li>
+                <li id="localOfficials">
+                    <div class="collapsible-header"><i class="material-icons">account_balance</i>Local Officials</div>
+                </li>
+
+
+        </ul></div>
+
+        <div class="col s12 m8 l9 main">
+        </div>
+
+
+    </div>
+
+
+
+
+    <script src="./Election Help!_files/jquery.min.js.download"></script>
+    <script src="./Election Help!_files/script.js.download"></script>
+
+    <!--Import jQuery Library-->
+    <script type="text/javascript" src="./Election Help!_files/jquery-3.2.1.min.js.download"></script>
+    <!--Import materialize.js-->
+    <script src="./Election Help!_files/materialize.min.js.download"></script>
+
+<!-- Code injected by live-server -->
+<script type="text/javascript">
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+
+<div class="hiddendiv common"></div></body></html>
