@@ -124,13 +124,7 @@ $('#submitBtn').on('click', function(event) {
     }, timeToWait)
 })
 
-<<<<<<< HEAD
-// repBtn is a placeholder for the buttons created under each dropdown. Replace it with whatever setting will capture those. 
-
-// I've used federal[0] as a placeholder in the information displays, as I'm not sure how we reference the correct array. If statement for each dropdown?
-=======
 // This function pulls and displays the relevant information about the rep when the user clicks on their name in the sidebar. It is used in conjunction with the getNews function below:
->>>>>>> dev
 function clickRep() {
     // When user chooses a representative:
     $(".sidebar").click(function (event) {
@@ -207,27 +201,6 @@ function clickRep() {
         getNews();
     })
 };
-<<<<<<< HEAD
-
-function getNews() {
-    $.ajax({
-        url: `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${officials[index].name}&api-key=IWE6hnGq7VzMyE3QxJe363KNU2gJmwbY`,
-        method: "GET"
-    }).then(function (stories) {
-        // Creates a div to hold the news stories and displays it on the page.
-        var newsHolder = $("<div>");
-        $(".main").append(newsHolder);
-
-        // For each story up to 5, creates a P tag and displays it on the page.
-        for (var i = 0; i < 5; i++) {
-            headline = stories.response.docs[i].abstract;
-            var eachStory = $("<p>");
-            eachStory.text(headline);
-            newsHolder.append(eachStory);
-        }
-    })
-}
-=======
 
 // This function pulls the 5 most recent news stories from the NYT API and displays them on the page.
     function getNews() {
@@ -258,4 +231,3 @@ function getNews() {
         })
     }
 
->>>>>>> dev
