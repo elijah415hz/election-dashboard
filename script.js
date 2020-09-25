@@ -158,42 +158,50 @@ $(".sidebar").click(function (event) {
     repContentBox.append(repInfo);
 
     // If statements check to be sure that relevant information exists in the object, displays it only if it does
+    // Name
     if (officials[index].name) {
         var repName = `<p>Name: ${officials[index].name}</p>`;
         repInfo.append(repName);
     };
+    // Title
     if (offices[officeIndex].name) {
         var repTitle = `<p>Title: ${offices[officeIndex].name}`
         repInfo.append(repTitle);
     };
+    // Political Party
     if (officials[index].party) {
         var repParty = `<p>Party: ${officials[index].party}</p>`;
         repInfo.append(repParty);
     };
+    // Phone Number
     if (officials[index].phones[0]) {
         var repPhone = `<p>Phone: ${officials[index].phones[0]}</p>`;
         repInfo.append(repPhone);
     };
+    // Email address
     if (officials[index].emails) {
         var repEmail = `<p>Email: ${officials[index].emails[0]}</p>`;
         repInfo.append(repEmail);
     };
-    if (officials[index].address[0].line1) {
+    // Address - For address to run properly without stopping the function, we first have to check if the address array exists at all, then within that if statement, check if the individual items exist, and display them accordingly.
+    if (officials[index].address){
+    if (officials[index].address) {
         var repAddress1 = `<p>Address: ${officials[index].address[0].line1}</p>`;
         repInfo.append(repAddress1);
     };
-    if (officials[index].address[0].line2) {
+    if (officials[index].address[0]) {
         var repAddress2 = `<p>${officials[index].address[0].line2}</p>`;
         repInfo.append(repAddress2);
     };
-    if (officials[index].address[0].line3) {
+    if (officials[index].address[0]) {
         var repAddress3 = `<p>${officials[index].address[0].line3}</p>`;
         repInfo.append(repAddress3);
     };
     if (officials[index].address[0].city && officials[index].address[0].state != "" && officials[index].address[0].zip != "") {
         var repCityStateZip = `<p>${officials[index].address[0].city}, ${officials[index].address[0].state}, ${officials[index].address[0].zip}</p>`;
         repInfo.append(repCityStateZip);
-    };
+    }};
+    // Website
     if (officials[index].urls) {
         var repWebsite = `<a href = '${officials[index].urls[0]}'>Website</a>`;
         repInfo.append(repWebsite);
