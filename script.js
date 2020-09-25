@@ -88,7 +88,6 @@ function addOfficialButtons(offices, officials) {
             }
         }
     }
-
 }
 
 // retrieve elected officials for location when user click's submit
@@ -201,7 +200,7 @@ $(".sidebar").click(function (event) {
     };
 
     // Creates loading bar as news loads in
-    preloader = $("<div class='progress'><div class='indeterminate'></div></div>");
+    preloader = $("<div class='progress'><div class='indeterminate'></div></div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>");
     $(".main").append(preloader);
     // Scrolls down to main on small screens
     $(".main")[0].scrollIntoView();
