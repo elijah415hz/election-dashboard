@@ -1,18 +1,19 @@
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     margin: 0;
     padding: 0;
-    background-color: #434343;
+    background: whitesmoke;
+    font-size: 16px;
 }
 
 nav {
-    background-color: #00C0FF;
+    background-color: lightslategray;
     position: fixed;
     top: 0;
     z-index: 100;
-}
-
-h3 {
-    color: white
 }
 
 .nav-wrapper {
@@ -20,33 +21,28 @@ h3 {
 }
 
 .nav-header {
-    color: white;
     font-size: 2em;
 }
 
 #userAddress {
-    color: white;
-    border-color: white;
     margin-top: 64px;
 }
 
 #submitBtn {
-    background-color: #00C0FF;
     display: block;
     margin: 0 auto;
 }
 
 .sidebar {
-    background-color: #E1E1E1;
+    background-color: #eee;
     border-radius: 7px;
     overflow-y: auto;
     height: auto;
-    max-height: calc(100vh - 290px);
+    max-height: calc(100vh - 340px);
     -webkit-overflow-scrolling: touch;
 }
 
 .collapsible-body {
-    background-color: white;
     cursor: pointer;
 }
 
@@ -65,3 +61,4 @@ h3 {
         max-height: 40vh;
     }
 }
+
