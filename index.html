@@ -22,53 +22,69 @@
 <body>
     <nav>
         <div class="nav-wrapper">
-            <a class="brand-logo center">My Officials Dashboard</a>
+            <!-- <a class="brand-logo center">My Officials Dashboard</a> -->
+            <a class="nav-header">My Officials Dashboard</a>
         </div>
     </nav>
     <div class="container">
-    <div class="row">
-        <form class="col s12 m8 offset-m2 l6 offset-l3">
-            <div class="row">
-                <div class="input-field">
-                    <input placeholder="Address" type="text" name="user-address" id="userAddress">
-                </div>
-                <p><strong>Please type your address above and click submit to get started on finding elected officials.</strong></p>
+        <div class="row">
+            <form class="col s12 m8 offset-m2 l6 offset-l3">
                 <div class="row">
-                    <div class="col s12">
-                    <button class="waves-effect waves-light btn right" id="submitBtn" style="display: inline-block; margin: 0 auto;">Submit</button>
+                    <div class="input-field">
+                        <input placeholder="Address" type="text" name="user-address" id="userAddress">
+                    </div>
+                    <p><strong>Please type your address above and click submit to get started on finding elected
+                            officials.</strong></p>
+                    <div class="row">
+                        <div class="col s12">
+                            <button class="waves-effect waves-light btn" id="submitBtn">Submit</button>
+                        </div>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+
+
+        <div class="row">
+
+            <div class="container col s12 m6 l4 sidebar">
+
+
+                <ul class="collapsible popout" data-collapsible="accordion">
+                    <li id='federalOfficials'>
+                        <div class="collapsible-header"><i class="material-icons">account_balance</i>Federal Officials
+                        </div>
+                    </li>
+                    <li id='stateOfficials'>
+                        <div class="collapsible-header"><i class="material-icons">account_balance</i>State Officials
+                        </div>
+                    </li>
+                    <li id='localOfficials'>
+                        <div class="collapsible-header"><i class="material-icons">account_balance</i>Local Officials
+                        </div>
+                    </li>
+
+
+            </div>
+            <div class="row">
+                <div class="col s12 m6 l7 main">
+                    <div class="col s12 m7">
+                        <h3 class="header">Get Ready to Vote!</h3>
+                        <div class="card horizontal">
+                            <div class="card-stacked">
+                                <div class="card-content">
+                                    <p id='welcome'>Enter your address above to find elected federal, state, and local
+                                        officials near you.</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-
-        </form>
-    </div>
-    
-
-    <div class="row">
-
-        <div class="container col s12 m6 l4 sidebar">
-
-
-            <ul class="collapsible popout" data-collapsible="accordion">
-                <li id='federalOfficials'>
-                    <div class="collapsible-header"><i class="material-icons">account_balance</i>Federal Officials</div>
-                </li>
-                <li id='stateOfficials'>
-                    <div class="collapsible-header"><i class="material-icons">account_balance</i>State Officials</div>
-                </li>
-                <li id='localOfficials'>
-                    <div class="collapsible-header"><i class="material-icons">account_balance</i>Local Officials</div>
-                </li>
-
-
         </div>
-        <div class="row">
-            <div class="col s12 m6 l7 main">
-            </div>
-        </div>
-
-    </div>
     </div>
 
 
@@ -79,7 +95,7 @@
 
     <!-- Import Algolia Library -->
     <script src="https://cdn.jsdelivr.net/npm/places.js@1.19.0"></script>
-    
+
     <!--Import jQuery Library-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- jQuery UI Library -->
