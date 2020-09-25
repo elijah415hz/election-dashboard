@@ -138,7 +138,12 @@ $(".sidebar").click(function (event) {
     officeIndex = event.target.getAttribute("data-office-index")
 
     // Creates and appends information card
-    var infoCard = $("<div class = 'card horizontal'>")
+    var mediaQuery = window.matchMedia("(max-width: 800px)")
+    if (mediaQuery.matches) {
+        var infoCard = $("<div class='card'>")
+    } else {
+        var infoCard = $("<div class = 'card horizontal'>")
+    }
     $(".main").append(infoCard)
 
     // Creates image placement on card, if we have an image URL to reference
