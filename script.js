@@ -202,7 +202,8 @@ $(".sidebar").click(function (event) {
     // Creates loading bar as news loads in
     preloader = $("<div class='progress'><div class='indeterminate'></div></div>");
     $(".main").append(preloader);
-
+    // Scrolls down to main on small screens
+    $(".main")[0].scrollIntoView();
     // Runs getNews function to display news stories:
     getNews();
 })
