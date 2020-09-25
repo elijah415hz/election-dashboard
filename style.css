@@ -25,6 +25,7 @@ nav {
 }
 
 #userAddress {
+    font-size: 16px;
     margin-top: 64px;
 }
 
@@ -45,6 +46,7 @@ nav {
 .collapsible-body {
     cursor: pointer;
 }
+
 
 #welcome {
     font-size: 1.5em;
