@@ -5,12 +5,16 @@ body {
     font-size: 16px;
 } 
 
+#userAddress {
+    font-size: 16px
+}
 
 .sidebar {
     background-color: #eee;
     border-radius: 7px;
     
 }
+
 /* hides the gps icon from user */
 .ap-input-icon {
     display: none;
