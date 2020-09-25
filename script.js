@@ -94,6 +94,7 @@ function addOfficialButtons(offices, officials) {
 // retrieve elected officials for location when user click's submit
 $('#submitBtn').on('click', function (event) {
     event.preventDefault()
+    addressInputEle.blur();
     // create reference to any active menu if it exists
     var activeEle = document.querySelector('.collapsible-header.active')
     var timeToWait;
@@ -237,3 +238,7 @@ function getNews() {
     })
 }
 
+// Event listener to zoom back out on any blur event
+// $('input, select, textarea').on('focus blur', function(event) {
+//     $('meta[name=viewport]').attr('content', 'width=device-width,initial-scale=1');
+//   });

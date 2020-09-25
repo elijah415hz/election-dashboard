@@ -1,6 +1,7 @@
 body {
     margin: 0;
     padding: 0;
+    font-size: 16px;
 } 
 
 
@@ -13,3 +14,4 @@ body {
 .ap-input-icon {
     display: none;
 }
+
