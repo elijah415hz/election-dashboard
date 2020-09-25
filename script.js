@@ -49,8 +49,8 @@ function getOfficials(address) {
                 $('.collapsible-header').effect('shake', { direction: 'left', distance: '10', times: 1 }, 200)
                 $('.collapsible-header').animate({ marginTop: '0', marginBottom: '0' }, 200, function () {
                     // after final animation runs, set var back to false so animations can be fired again
-                submitBtnClicked = false
-                   
+                    submitBtnClicked = false
+
                 })
             }
         }, 500)
@@ -122,6 +122,7 @@ $('#submitBtn').on('click', function (event) {
     }
     // get user's elected officials
     getOfficials(userAddress);
+    
 })
 
 // When user chooses a representative:
@@ -151,8 +152,8 @@ $(".sidebar").click(function (event) {
 
         var repPic = $("<img src = '' alt = 'Picture of Representative'>");
         if (mediaQuery.matches) {
-            repPic.css({width: "50%", margin: "auto"})
-        } 
+            repPic.css({ width: "50%", margin: "auto" })
+        }
         repPic.attr("src", officials[index].photoUrl);
         $('.card-image').append(repPic);
     };
@@ -218,7 +219,11 @@ $(".sidebar").click(function (event) {
     preloader = $("<div class='progress'><div class='indeterminate'></div></div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>");
     $(".main").append(preloader);
     // Scrolls down to main on small screens
-    $(".main")[0].scrollIntoView();
+    var mediaQuery = window.matchMedia("(max-width: 600px)")
+    if (mediaQuery.matches) {
+        $(".main")[0].scrollIntoView();
+    }
+
     // Runs getNews function to display news stories:
     getNews();
 })
@@ -241,19 +246,19 @@ function getNews() {
 
         // Displays up to 5 stories on page
         for (var i = 0; i < 5; i++) {
-        // Create and append headline as hyperlink
+            // Create and append headline as hyperlink
             var headline = stories.response.docs[i].headline.main;
             var storyUrl = stories.response.docs[i].web_url;
             var displayHeadline = $(`<a href = "${storyUrl}" style = 'font-weight: bold;'>${headline}</a>`);
             repNews.append(displayHeadline);
-        // Create and append author and type (opinion, etc)
+            // Create and append author and type (opinion, etc)
             var byLine = stories.response.docs[i].byline.original;
             var articleType = stories.response.docs[i].section_name;
             var authorP = $(`<p>${byLine} - ${articleType}</p>`);
-            if (byLine){
-            repNews.append(authorP);
+            if (byLine) {
+                repNews.append(authorP);
             }
-        // Create and append story abstract
+            // Create and append story abstract
             var summary = stories.response.docs[i].abstract;
             var storySummary = $("<p>");
             storySummary.html(`${summary}<br><br>`);

@@ -46,6 +46,8 @@ nav {
     cursor: pointer;
 }
 
+
+
 #welcome {
     font-size: 1.5em;
 }
@@ -54,6 +56,12 @@ nav {
 .ap-input-icon {
     display: none;
 }
+
+
+.main {
+    scroll-margin-top: 50px;
+}
+
 
 @media screen and (orientation: portrait) {
     .sidebar {
