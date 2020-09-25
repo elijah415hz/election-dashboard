@@ -1,6 +1,7 @@
 body {
     margin: 0;
     padding: 0;
+    background: whitesmoke;
 } 
 
 
@@ -9,7 +10,11 @@ body {
     border-radius: 7px;
     
 }
-/* hides the gps icon from usergi */
+/* hides the gps icon from user */
 .ap-input-icon {
     display: none;
+}
+
+nav{
+    background:lightslategray
 }
