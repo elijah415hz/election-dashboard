@@ -13,7 +13,7 @@ var index = "";
 var officeIndex = "";
 var preloader = "";
 
-
+// Function to set up API for Algolia autocomplete
 (function () {
     var placesAutocomplete = places({
         appId: 'pl1GM2GV06CF',
@@ -38,6 +38,22 @@ function getOfficials(address) {
         offices = response.offices
         officials = response.officials
         addOfficialButtons(offices, officials)
+    }).done(function () {
+        // Animate sidebar to show that officials have arrived
+        setTimeout(function () {
+            if (!submitBtnClicked) {
+                // set var to true so animations can't be fired while they are currently running
+                submitBtnClicked = true
+                // separate menu headers and make them shake twice
+                $('.collapsible-header').animate({ marginTop: '10px', marginBottom: '10px' }, 100)
+                $('.collapsible-header').effect('shake', { direction: 'left', distance: '10', times: 1 }, 200)
+                $('.collapsible-header').animate({ marginTop: '0', marginBottom: '0' }, 200, function () {
+                    // after final animation runs, set var back to false so animations can be fired again
+                submitBtnClicked = false
+                   
+                })
+            }
+        }, 500)
     })
 }
 
@@ -92,38 +108,20 @@ function addOfficialButtons(offices, officials) {
 
 // retrieve elected officials for location when user click's submit
 $('#submitBtn').on('click', function (event) {
-    event.preventDefault()
+    event.preventDefault();
+    // get user input
+    var userAddress = addressInputEle.val()
     addressInputEle.blur();
+    // Close any open menus
     // create reference to any active menu if it exists
     var activeEle = document.querySelector('.collapsible-header.active')
-    var timeToWait;
     // if there is an active menu...
     if (activeEle) {
         // simulate a click of that menu to close it
         activeEle.click()
-        // set timeToWait to .5 sec to give menu time to close
-        timeToWait = 500
-    } else {
-        // if all menus are closed, allow shake animations to first right after clicking submit
-        timeToWait = 0
     }
-    setTimeout(function () {
-        if (!submitBtnClicked) {
-            // set var to true so animations can't be fired while they are currently running
-            submitBtnClicked = true
-            // separate menu headers and make them shake twice
-            $('.collapsible-header').animate({ marginTop: '10px', marginBottom: '10px' }, 100)
-            $('.collapsible-header').effect('shake', { direction: 'left', distance: '10', times: 1 }, 200)
-            $('.collapsible-header').animate({ marginTop: '0', marginBottom: '0' }, 200, function () {
-                // after final animation runs, set var back to false so animations can be fired again
-                submitBtnClicked = false
-                // get user input
-                var userAddress = addressInputEle.val()
-                // get user's elected officials
-                getOfficials(userAddress)
-            })
-        }
-    }, timeToWait)
+    // get user's elected officials
+    getOfficials(userAddress);
 })
 
 // When user chooses a representative:
@@ -184,23 +182,24 @@ $(".sidebar").click(function (event) {
         repInfo.append(repEmail);
     };
     // Address - For address to run properly without stopping the function, we first have to check if the address array exists at all, then within that if statement, check if the individual items exist, and display them accordingly.
-    if (officials[index].address){
-    if (officials[index].address[0].line1) {
-        var repAddress1 = `<p>Address: ${officials[index].address[0].line1}</p>`;
-        repInfo.append(repAddress1);
+    if (officials[index].address) {
+        if (officials[index].address[0].line1) {
+            var repAddress1 = `<p>Address: ${officials[index].address[0].line1}</p>`;
+            repInfo.append(repAddress1);
+        };
+        if (officials[index].address[0].line2) {
+            var repAddress2 = `<p>${officials[index].address[0].line2}</p>`;
+            repInfo.append(repAddress2);
+        };
+        if (officials[index].address[0].line3) {
+            var repAddress3 = `<p>${officials[index].address[0].line3}</p>`;
+            repInfo.append(repAddress3);
+        };
+        if (officials[index].address[0].city && officials[index].address[0].state && officials[index].address[0].zip) {
+            var repCityStateZip = `<p>${officials[index].address[0].city}, ${officials[index].address[0].state}, ${officials[index].address[0].zip}</p>`;
+            repInfo.append(repCityStateZip);
+        }
     };
-    if (officials[index].address[0].line2) {
-        var repAddress2 = `<p>${officials[index].address[0].line2}</p>`;
-        repInfo.append(repAddress2);
-    };
-    if (officials[index].address[0].line3) {
-        var repAddress3 = `<p>${officials[index].address[0].line3}</p>`;
-        repInfo.append(repAddress3);
-    };
-    if (officials[index].address[0].city && officials[index].address[0].state && officials[index].address[0].zip) {
-        var repCityStateZip = `<p>${officials[index].address[0].city}, ${officials[index].address[0].state}, ${officials[index].address[0].zip}</p>`;
-        repInfo.append(repCityStateZip);
-    }};
     // Website
     if (officials[index].urls) {
         var repWebsite = `<a href = '${officials[index].urls[0]}'>Website</a>`;
