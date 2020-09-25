@@ -1,15 +1,78 @@
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     margin: 0;
     padding: 0;
-} 
+    background: whitesmoke;
+    font-size: 16px;
+}
 
+nav {
+    background-color: lightslategray;
+    position: fixed;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-wrapper {
+    text-align: center;
+}
+
+.nav-header {
+    font-size: 2em;
+}
+
+#userAddress {
+    font-size: 16px;
+    margin-top: 64px;
+}
+
+#submitBtn {
+    display: block;
+    margin: 0 auto;
+}
 
 .sidebar {
     background-color: #eee;
     border-radius: 7px;
-    
+    overflow-y: auto;
+    height: auto;
+    max-height: calc(100vh - 340px);
+    -webkit-overflow-scrolling: touch;
 }
+
+.collapsible-body {
+    cursor: pointer;
+}
+
+
+
+#welcome {
+    font-size: 1.5em;
+}
+
 /* hides the gps icon from usergi */
 .ap-input-icon {
     display: none;
+}
+
+
+.main {
+    scroll-margin-top: 50px;
+}
+
+
+@media screen and (orientation: portrait) {
+    .sidebar {
+        height: auto;
+        max-height: 40vh;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    .nav-header {
+        font-size: 8vw;
+    }
 }

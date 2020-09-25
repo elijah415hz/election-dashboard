@@ -13,7 +13,7 @@ var index = "";
 var officeIndex = "";
 var preloader = "";
 
-
+// Function to set up API for Algolia autocomplete
 (function () {
     var placesAutocomplete = places({
         appId: 'pl1GM2GV06CF',
@@ -38,6 +38,22 @@ function getOfficials(address) {
         offices = response.offices
         officials = response.officials
         addOfficialButtons(offices, officials)
+    }).done(function () {
+        // Animate sidebar to show that officials have arrived
+        setTimeout(function () {
+            if (!submitBtnClicked) {
+                // set var to true so animations can't be fired while they are currently running
+                submitBtnClicked = true
+                // separate menu headers and make them shake twice
+                $('.collapsible-header').animate({ marginTop: '10px', marginBottom: '10px' }, 100)
+                $('.collapsible-header').effect('shake', { direction: 'left', distance: '10', times: 1 }, 200)
+                $('.collapsible-header').animate({ marginTop: '0', marginBottom: '0' }, 200, function () {
+                    // after final animation runs, set var back to false so animations can be fired again
+                    submitBtnClicked = false
+
+                })
+            }
+        }, 500)
     })
 }
 
@@ -88,42 +104,25 @@ function addOfficialButtons(offices, officials) {
             }
         }
     }
-
 }
 
 // retrieve elected officials for location when user click's submit
 $('#submitBtn').on('click', function (event) {
-    event.preventDefault()
+    event.preventDefault();
+    // get user input
+    var userAddress = addressInputEle.val()
+    addressInputEle.blur();
+    // Close any open menus
     // create reference to any active menu if it exists
     var activeEle = document.querySelector('.collapsible-header.active')
-    var timeToWait;
     // if there is an active menu...
     if (activeEle) {
         // simulate a click of that menu to close it
         activeEle.click()
-        // set timeToWait to .5 sec to give menu time to close
-        timeToWait = 500
-    } else {
-        // if all menus are closed, allow shake animations to first right after clicking submit
-        timeToWait = 0
     }
-    setTimeout(function () {
-        if (!submitBtnClicked) {
-            // set var to true so animations can't be fired while they are currently running
-            submitBtnClicked = true
-            // separate menu headers and make them shake twice
-            $('.collapsible-header').animate({ marginTop: '10px', marginBottom: '10px' }, 100)
-            $('.collapsible-header').effect('shake', { direction: 'left', distance: '10', times: 1 }, 200)
-            $('.collapsible-header').animate({ marginTop: '0', marginBottom: '0' }, 200, function () {
-                // after final animation runs, set var back to false so animations can be fired again
-                submitBtnClicked = false
-                // get user input
-                var userAddress = addressInputEle.val()
-                // get user's elected officials
-                getOfficials(userAddress)
-            })
-        }
-    }, timeToWait)
+    // get user's elected officials
+    getOfficials(userAddress);
+    
 })
 
 // When user chooses a representative:
@@ -138,7 +137,12 @@ $(".sidebar").click(function (event) {
     officeIndex = event.target.getAttribute("data-office-index")
 
     // Creates and appends information card
-    var infoCard = $("<div class = 'card horizontal'>")
+    var mediaQuery = window.matchMedia("(max-width: 992px)")
+    if (mediaQuery.matches) {
+        var infoCard = $("<div class='card'>")
+    } else {
+        var infoCard = $("<div class = 'card horizontal'>")
+    }
     $(".main").append(infoCard)
 
     // Creates image placement on card, if we have an image URL to reference
@@ -147,6 +151,9 @@ $(".sidebar").click(function (event) {
         infoCard.append(cardImage);
 
         var repPic = $("<img src = '' alt = 'Picture of Representative'>");
+        if (mediaQuery.matches) {
+            repPic.css({ width: "50%", margin: "auto" })
+        }
         repPic.attr("src", officials[index].photoUrl);
         $('.card-image').append(repPic);
     };
@@ -158,50 +165,64 @@ $(".sidebar").click(function (event) {
     repContentBox.append(repInfo);
 
     // If statements check to be sure that relevant information exists in the object, displays it only if it does
+    // Name
     if (officials[index].name) {
         var repName = `<p>Name: ${officials[index].name}</p>`;
         repInfo.append(repName);
     };
+    // Title
     if (offices[officeIndex].name) {
         var repTitle = `<p>Title: ${offices[officeIndex].name}`
         repInfo.append(repTitle);
     };
+    // Political Party
     if (officials[index].party) {
         var repParty = `<p>Party: ${officials[index].party}</p>`;
         repInfo.append(repParty);
     };
+    // Phone Number
     if (officials[index].phones[0]) {
         var repPhone = `<p>Phone: ${officials[index].phones[0]}</p>`;
         repInfo.append(repPhone);
     };
+    // Email address
     if (officials[index].emails) {
         var repEmail = `<p>Email: ${officials[index].emails[0]}</p>`;
         repInfo.append(repEmail);
     };
-    if (officials[index].address[0].line1) {
-        var repAddress1 = `<p>Address: ${officials[index].address[0].line1}</p>`;
-        repInfo.append(repAddress1);
+    // Address - For address to run properly without stopping the function, we first have to check if the address array exists at all, then within that if statement, check if the individual items exist, and display them accordingly.
+    if (officials[index].address) {
+        if (officials[index].address[0].line1) {
+            var repAddress1 = `<p>Address: ${officials[index].address[0].line1}</p>`;
+            repInfo.append(repAddress1);
+        };
+        if (officials[index].address[0].line2) {
+            var repAddress2 = `<p>${officials[index].address[0].line2}</p>`;
+            repInfo.append(repAddress2);
+        };
+        if (officials[index].address[0].line3) {
+            var repAddress3 = `<p>${officials[index].address[0].line3}</p>`;
+            repInfo.append(repAddress3);
+        };
+        if (officials[index].address[0].city && officials[index].address[0].state && officials[index].address[0].zip) {
+            var repCityStateZip = `<p>${officials[index].address[0].city}, ${officials[index].address[0].state}, ${officials[index].address[0].zip}</p>`;
+            repInfo.append(repCityStateZip);
+        }
     };
-    if (officials[index].address[0].line2) {
-        var repAddress2 = `<p>${officials[index].address[0].line2}</p>`;
-        repInfo.append(repAddress2);
-    };
-    if (officials[index].address[0].line3) {
-        var repAddress3 = `<p>${officials[index].address[0].line3}</p>`;
-        repInfo.append(repAddress3);
-    };
-    if (officials[index].address[0].city && officials[index].address[0].state != "" && officials[index].address[0].zip != "") {
-        var repCityStateZip = `<p>${officials[index].address[0].city}, ${officials[index].address[0].state}, ${officials[index].address[0].zip}</p>`;
-        repInfo.append(repCityStateZip);
-    };
+    // Website
     if (officials[index].urls) {
         var repWebsite = `<a href = '${officials[index].urls[0]}'>Website</a>`;
         repInfo.append(repWebsite);
     };
 
     // Creates loading bar as news loads in
-    preloader = $("<div class='progress'><div class='indeterminate'></div></div>");
+    preloader = $("<div class='progress'><div class='indeterminate'></div></div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>");
     $(".main").append(preloader);
+    // Scrolls down to main on small screens
+    var mediaQuery = window.matchMedia("(max-width: 600px)")
+    if (mediaQuery.matches) {
+        $(".main")[0].scrollIntoView();
+    }
 
     // Runs getNews function to display news stories:
     getNews();
@@ -220,15 +241,29 @@ function getNews() {
         newsCard.append(repNewsBox);
         var repNews = $("<div class = 'card-content'>");
         repNewsBox.append(repNews);
-        var newsHeader = $("<b>Recent News:</b>");
+        var newsHeader = $("<h4>Recent News:</h4>");
         repNews.append(newsHeader);
 
-        // For each story up to 5, creates a P tag and displays it on the page.
+        // Displays up to 5 stories on page
         for (var i = 0; i < 5; i++) {
-            headline = stories.response.docs[i].abstract;
-            var eachStory = $("<p>");
-            eachStory.html(`${headline}<br><br>`);
-            repNews.append(eachStory);
+            // Create and append headline as hyperlink
+            var headline = stories.response.docs[i].headline.main;
+            var storyUrl = stories.response.docs[i].web_url;
+            var displayHeadline = $(`<a href = "${storyUrl}" style = 'font-weight: bold;'>${headline}</a>`);
+            repNews.append(displayHeadline);
+            // Create and append author and type (opinion, etc)
+            var byLine = stories.response.docs[i].byline.original;
+            var articleType = stories.response.docs[i].section_name;
+            var authorP = $(`<p>${byLine} - ${articleType}</p>`);
+            if (byLine) {
+                repNews.append(authorP);
+            }
+            // Create and append story abstract
+            var summary = stories.response.docs[i].abstract;
+            var storySummary = $("<p>");
+            storySummary.html(`${summary}<br><br>`);
+            repNews.append(storySummary);
+            console.log(stories);
         }
     }).done(function () {
         // Once news has loaded in, removes the preloader from the screen
@@ -236,3 +271,7 @@ function getNews() {
     })
 }
 
+// Event listener to zoom back out on any blur event
+// $('input, select, textarea').on('focus blur', function(event) {
+//     $('meta[name=viewport]').attr('content', 'width=device-width,initial-scale=1');
+//   });
