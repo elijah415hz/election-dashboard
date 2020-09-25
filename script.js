@@ -185,19 +185,19 @@ $(".sidebar").click(function (event) {
     };
     // Address - For address to run properly without stopping the function, we first have to check if the address array exists at all, then within that if statement, check if the individual items exist, and display them accordingly.
     if (officials[index].address){
-    if (officials[index].address) {
+    if (officials[index].address[0].line1) {
         var repAddress1 = `<p>Address: ${officials[index].address[0].line1}</p>`;
         repInfo.append(repAddress1);
     };
-    if (officials[index].address[0]) {
+    if (officials[index].address[0].line2) {
         var repAddress2 = `<p>${officials[index].address[0].line2}</p>`;
         repInfo.append(repAddress2);
     };
-    if (officials[index].address[0]) {
+    if (officials[index].address[0].line3) {
         var repAddress3 = `<p>${officials[index].address[0].line3}</p>`;
         repInfo.append(repAddress3);
     };
-    if (officials[index].address[0].city && officials[index].address[0].state != "" && officials[index].address[0].zip != "") {
+    if (officials[index].address[0].city && officials[index].address[0].state && officials[index].address[0].zip) {
         var repCityStateZip = `<p>${officials[index].address[0].city}, ${officials[index].address[0].state}, ${officials[index].address[0].zip}</p>`;
         repInfo.append(repCityStateZip);
     }};
