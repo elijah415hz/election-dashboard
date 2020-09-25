@@ -236,15 +236,29 @@ function getNews() {
         newsCard.append(repNewsBox);
         var repNews = $("<div class = 'card-content'>");
         repNewsBox.append(repNews);
-        var newsHeader = $("<b>Recent News:</b>");
+        var newsHeader = $("<h4>Recent News:</h4>");
         repNews.append(newsHeader);
 
-        // For each story up to 5, creates a P tag and displays it on the page.
+        // Displays up to 5 stories on page
         for (var i = 0; i < 5; i++) {
-            headline = stories.response.docs[i].abstract;
-            var eachStory = $("<p>");
-            eachStory.html(`${headline}<br><br>`);
-            repNews.append(eachStory);
+        // Create and append headline as hyperlink
+            var headline = stories.response.docs[i].headline.main;
+            var storyUrl = stories.response.docs[i].web_url;
+            var displayHeadline = $(`<a href = "${storyUrl}" style = 'font-weight: bold;'>${headline}</a>`);
+            repNews.append(displayHeadline);
+        // Create and append author and type (opinion, etc)
+            var byLine = stories.response.docs[i].byline.original;
+            var articleType = stories.response.docs[i].section_name;
+            var authorP = $(`<p>${byLine} - ${articleType}</p>`);
+            if (byLine){
+            repNews.append(authorP);
+            }
+        // Create and append story abstract
+            var summary = stories.response.docs[i].abstract;
+            var storySummary = $("<p>");
+            storySummary.html(`${summary}<br><br>`);
+            repNews.append(storySummary);
+            console.log(stories);
         }
     }).done(function () {
         // Once news has loaded in, removes the preloader from the screen
