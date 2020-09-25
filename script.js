@@ -138,7 +138,12 @@ $(".sidebar").click(function (event) {
     officeIndex = event.target.getAttribute("data-office-index")
 
     // Creates and appends information card
-    var infoCard = $("<div class = 'card horizontal'>")
+    var mediaQuery = window.matchMedia("(max-width: 992px)")
+    if (mediaQuery.matches) {
+        var infoCard = $("<div class='card'>")
+    } else {
+        var infoCard = $("<div class = 'card horizontal'>")
+    }
     $(".main").append(infoCard)
 
     // Creates image placement on card, if we have an image URL to reference
@@ -147,6 +152,9 @@ $(".sidebar").click(function (event) {
         infoCard.append(cardImage);
 
         var repPic = $("<img src = '' alt = 'Picture of Representative'>");
+        if (mediaQuery.matches) {
+            repPic.css({width: "50%", margin: "auto"})
+        } 
         repPic.attr("src", officials[index].photoUrl);
         $('.card-image').append(repPic);
     };
