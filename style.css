@@ -24,9 +24,23 @@ nav {
     font-size: 2em;
 }
 
+.countdown {
+    margin-top: 75px;
+}
+
+.countdown-head {
+    font-size: 2em;
+    text-align: right;
+}
+
+.countdown-text {
+    font-size: 1.5em;
+    text-align: center;
+    height: 10px;
+}
+
 #userAddress {
     font-size: 16px;
-    margin-top: 64px;
 }
 
 #submitBtn {

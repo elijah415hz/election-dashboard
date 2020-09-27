@@ -122,7 +122,7 @@ $('#submitBtn').on('click', function (event) {
     }
     // get user's elected officials
     getOfficials(userAddress);
-    
+
 })
 
 // When user chooses a representative:
@@ -271,7 +271,27 @@ function getNews() {
     })
 }
 
+function electionTimer() {
+    var countDownDate = new Date('Nov 3, 2020 00:00:00').getTime()
+    var countdown = setInterval(function () {
+        var now = new Date().getTime()
+        var timeleft = countDownDate - now;
+
+        var days = Math.floor(timeleft / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((timeleft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((timeleft % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((timeleft % (1000 * 60)) / 1000);
+
+        $('.days-timer').text(days)
+        $('.hours-timer').text(hours)
+        $('.minutes-timer').text(minutes)
+        $('.seconds-timer').text(seconds)
+    }, 1000)
+}
+
 // Event listener to zoom back out on any blur event
 // $('input, select, textarea').on('focus blur', function(event) {
 //     $('meta[name=viewport]').attr('content', 'width=device-width,initial-scale=1');
 //   });
+
+electionTimer()
