@@ -47,12 +47,6 @@ nav {
     cursor: pointer;
 }
 
-
-
-#welcome {
-    font-size: 1.5em;
-}
-
 /* hides the gps icon from usergi */
 .ap-input-icon {
     display: none;
