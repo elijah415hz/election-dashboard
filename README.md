@@ -1,5 +1,6 @@
 # Election Dashboard
-## Screen Shot 
+![Screen Shot](elected_officials.png)
+
 Election Dashboard is a one stop site to get information about all of your US elected officials. Just enter your address, and Election Dashboard will display all of your elected officials, from president all the way down to city officials. 
 
 ### How to use
